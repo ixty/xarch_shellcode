@@ -1,0 +1,36 @@
+2016 - ixty
+
+stage0 contains a shellcode that can be successfully executed by the following architectures:
+    - x86
+    - x86_64
+    - arm (little endian)
+    - arm_64 (aarch64) (little endian)
+
+To make it work we need:
+    - 4 bytes that translate to:
+        - valid opcodes for arm, arm64 and x86
+        - that evaluate to a jump in x86
+        - that are functional nops in both arms (aka no load / store & no touching of PC / LR / stack)
+    - 4 more bytes that translate to:
+        - valid opcodes for arm and arm64
+        - evaluate to a jump in arm
+        - functionnal nop for arm64
+
+For the x86 / arm branching we use the following:
+0xEB 0xXX 0x00 0x32     (with XX being the offset to x86 code)
+    arm       andlo   r0, r0, #0xeb000
+    arm64     orr     w11, w23, #7
+    x86       jmp     $+0xa / junk
+    x86_64    jmp     $+0xa / junk
+
+For the arm / arm64 branching we use:
+0xXX 0xXX 0xXX 0xEA
+    arm       b       XXX
+    arm64     ands    x1, x0, x0
+
+(exact decoded instructions will change based on the offset values)
+
+We differenciate between x86 32 and 64 bits by using the REX + NOP / INC trick.
+After that we just jump to arch specific payloads.
+
+You can use the poc.asm to get a /bin/sh shellcode compatible with all those archs (it contains nulls thought)

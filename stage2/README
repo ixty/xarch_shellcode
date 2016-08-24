@@ -1,0 +1,10 @@
+2016 - ixty
+
+stage2 is the final payload code.
+It is written in C once and will be compiled for all supported architectures.
+
+The architecture specific code is in the syscall_*.c/h files that implement linux syscalls.
+
+Dont forget to edit build.py if you add more c files to be compiled.
+
+

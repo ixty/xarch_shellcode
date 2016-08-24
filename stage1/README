@@ -1,0 +1,14 @@
+2016 - ixty
+
+stage1 contains arch specific assembler code that act as 'loaders'
+Each loader is pretty simple, it consists of a few instructions that:
+    - get current PC
+    - read & patch relocation information in the binary code that follows the loader
+    - jump to code 'entry point'
+
+Those loaders assume that the memory layout is the following:
+
+[loader code] [num relocs] [reloc1] [reloc2] ... [relocN] [start addr offset] [code]
+
+The loader assumes that the code is zero-mapped which is to say that the first instruction thinks its own address is 0
+The script build.py remaps the original section addresses to reflect that.

@@ -1,0 +1,12 @@
+2016 - ixty
+
+Shellcode testing utility
+
+Compiled version distributed for each supported arch
+Use this utility to verify that the output functions correctly
+
+user@x86_64-box   $ ./sc_86     ./output
+user@x86_64-box   $ ./sc_x86_64 ./output
+user@armhf-chroot $ ./sc_arm    ./output
+user@arm64-chroot $ ./sc_arm_64 ./output
+
