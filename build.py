@@ -29,8 +29,8 @@ common_opts = ' -nostdlib                           \
 # src/syscall_(ARCH)_.c is automatically added to that list
 common_files = [
     'stage2/main.c',
-    'stage2/snprintf.c',
-    'stage2/utils.c',
+    # 'stage2/snprintf.c',
+    # 'stage2/utils.c',
 ]
 
 # supported architectures

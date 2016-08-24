@@ -15,5 +15,7 @@ void *  realloc(void * addr, size_t size);
 void *  malloc(size_t len);
 void    free(void * ptr);
 
+// avoid int truncation issue
+void * _mmap(void * start, long length, int prot, int flags, int fd, long offset);
 
 #endif

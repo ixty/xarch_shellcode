@@ -118,7 +118,7 @@ long _brk(unsigned long addr)
     return ret;
 }
 
-int _exit(int level)
+long _exit(int level)
 {
     long    ret;
 
@@ -129,4 +129,17 @@ int _exit(int level)
         : "0"(__NR_exit), "bx"(level)
     );
     return (ret);
+}
+
+long _execve(char * filename, char ** argv, char ** envp)
+{
+    long ret;
+
+    asm volatile
+    (
+        "int $0x80"
+        : "=a" (ret)
+        : "0"(__NR_execve), "bx"(filename), "c"(argv), "d"(envp)
+    );
+    return ret;
 }

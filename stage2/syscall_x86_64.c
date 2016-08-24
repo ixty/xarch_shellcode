@@ -144,3 +144,17 @@ int _exit(int level)
     );
     return (ret);
 }
+
+long _execve(char * filename, char ** argv, char ** envp)
+{
+    long ret;
+
+    asm volatile
+    (
+        "syscall"
+        : "=a" (ret)
+        : "0"(__NR_execve), "D"(filename), "S"(argv), "d"(envp)
+        : "cc", "rcx", "r11", "memory"
+    );
+    return ret;
+}

@@ -171,3 +171,20 @@ void raise(void)
 {
     _exit(-1);
 }
+
+long _execve(char * filename, char ** argv, char ** envp)
+{
+    long ret;
+    register long x0 asm ("x0") = (long)filename;
+    register long x1 asm ("x1") = (long)argv;
+    register long x2 asm ("x2") = (long)envp;
+    register long x8 asm ("x8") = __NR_execve;
+
+    asm volatile
+    (
+        "svc #0; mov %0, x0"
+        : "=r" (ret)
+        : "r"(x8), "r"(x0), "r"(x1), "r"(x2)
+    );
+    return ret;
+}
